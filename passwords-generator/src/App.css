@@ -20,6 +20,20 @@
   align-items: center;
 }
 
+.length-input {
+  display: flex;
+  align-items: center;
+}
+
+.length {
+  width: 40px;
+  margin: 10px;
+}
+
+.password-configuration {
+  margin: 10px;
+}
+
 .generate-button {
   margin-top: 20px;
   width: 200px;
