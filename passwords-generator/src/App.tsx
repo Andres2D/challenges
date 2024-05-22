@@ -106,6 +106,8 @@ const App = () => {
             value={length}
             onChange={handleLengthChange}
             placeholder='10'
+            min={8}
+            max={50}
           />
         </div>
         <button 
