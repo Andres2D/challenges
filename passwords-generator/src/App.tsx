@@ -56,8 +56,9 @@ const App = () => {
         value={key} 
         checked={settings.has(key)}
         onChange={(event) => handleSettingsChange(event) } 
+        className='setting-input'
       />
-      <label>{label}</label>
+      <label className='setting-label'>{label}</label>
     </div>
   )
 
@@ -72,14 +73,20 @@ const App = () => {
           >
             Your new password
           </label>
-          <div>
+          <div className='password-group'>
             <input 
+              className="output-text"
               type='text'
               value={password}
               placeholder='Select at least one option'
               disabled
             />
-            <button type='button'>copy</button>
+            <button 
+              type='button'
+              className='copy-button'
+            >
+              copy
+            </button>
           </div>
         </section>
         <section className='password-configuration'>
