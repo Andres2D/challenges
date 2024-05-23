@@ -1,35 +1,26 @@
 import { useState } from 'react';
 import './App.css';
 import { generatePassword } from './helpers/password';
-import { Settings, SettingsInputMap } from './interfaces/password';
-
-const settingsList: SettingsInputMap[] = [
-  {
-    key: 'hasLowercase',
-    label: 'With lowercase'
-  },
-  {
-    key: 'hasUppercase',
-    label: 'With uppercase'
-  },
-  {
-    key: 'hasNumbers',
-    label: 'With numbers'
-  },
-  {
-    key: 'hasSymbols',
-    label: 'With symbols'
-  }
-];
-
+import { Settings } from './interfaces/password';
+import { settingsList } from './constants/constants';
 
 const App = () => {
   const [password, setPassword] = useState('');
   const [length, setLength] = useState(10);
+  const [validForm, setValidForm] = useState(true);
   const [settings, setSettings] = useState(new Set([...settingsList.map(setting => setting.key)]));
 
   const formHandler = (event: any) => {
     event.preventDefault();
+
+    if(
+      !settings.has('hasLowercase') &&
+      !settings.has('hasNumbers') &&
+      !settings.has('hasSymbols') &&
+      !settings.has('hasUppercase') 
+    ) {
+      setValidForm(false);
+    }
 
     const passwordConfiguration: Settings = {
       hasLowercase: settings.has('hasLowercase') ? true : false,
@@ -45,6 +36,7 @@ const App = () => {
 
   const handleSettingsChange = (event: any) => {
     const checkedId = event.target.value;
+    setValidForm(true);
     if(event.target.checked) {
       setSettings(new Set([...settings, checkedId]));
     } else {
@@ -84,10 +76,10 @@ const App = () => {
             <input 
               type='text'
               value={password}
-              placeholder='sdkfjhsdf4r23-'
+              placeholder='Select at least one option'
               disabled
             />
-            <button>copy</button>
+            <button type='button'>copy</button>
           </div>
         </section>
         <section className='password-configuration'>
@@ -113,6 +105,7 @@ const App = () => {
         <button 
           className='generate-button'
           type='submit'
+          disabled={!validForm}
         >
           Generate
         </button>
