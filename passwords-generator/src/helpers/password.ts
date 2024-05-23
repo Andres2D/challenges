@@ -2,13 +2,20 @@ import { Settings } from '../interfaces/password';
 import { alphabet, numbers, symbols } from '../constants/constants';
 import { getRandom } from './random';
 
-export const generatePassword = (settings: Settings) => {
+export const generatePassword = (settings: Settings): string => {
 
   const passwordBase = generateArrays(settings);
+  let password: any[] = [];
 
-  console.log(passwordBase);
+  Array.from({length: settings.length}).forEach((_, index: number) => {
+    passwordBase.forEach((option: string[] | number[]) => {
+      password.push(option[index]);
+    }); 
+  });
 
-  return 'abc123.'
+  password = password.slice(0, settings.length);
+
+  return password.join('');
 }
 
 const generateArrays = (settings: Settings): Array<string[] | number[]> => {
