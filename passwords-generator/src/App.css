@@ -44,6 +44,7 @@
   font-size: 25px;
   border-radius: 10px;
   cursor: pointer;
+  border: none;
 }
 
 .password-group {
@@ -80,4 +81,5 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   cursor: pointer;
+  font-size: 20px;
 }

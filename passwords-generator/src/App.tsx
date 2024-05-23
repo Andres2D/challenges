@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './App.css';
 import { generatePassword } from './helpers/password';
 import { Settings } from './interfaces/password';
@@ -9,6 +9,7 @@ const App = () => {
   const [length, setLength] = useState(10);
   const [validForm, setValidForm] = useState(true);
   const [settings, setSettings] = useState(new Set([...settingsList.map(setting => setting.key)]));
+  let passwordElement = useRef<any>(null);
 
   const formHandler = (event: any) => {
     event.preventDefault();
@@ -48,6 +49,20 @@ const App = () => {
     const value = event.target.value;
     setLength(value);
   }
+  
+  const copyToClipboard = async() => {
+    const passwordValue = passwordElement?.current?.value;
+    try {
+      if(!passwordValue) {
+        return;
+      }
+
+      await navigator.clipboard.writeText(passwordValue);
+      alert('Content copied to clipboard');
+    } catch (err) {
+      alert('Failed to copy. try again later');
+    }
+  }
 
   const settingMap = settingsList.map(({key, label}) => 
     <div key={key}>
@@ -75,6 +90,7 @@ const App = () => {
           </label>
           <div className='password-group'>
             <input 
+              ref={passwordElement}
               className="output-text"
               type='text'
               value={password}
@@ -84,6 +100,7 @@ const App = () => {
             <button 
               type='button'
               className='copy-button'
+              onClick={copyToClipboard}
             >
               copy
             </button>
